@@ -517,6 +517,18 @@ def exchange_loop(client, remote, port):
                         threading.Thread(target=send_msg, args=(client, dataS.hex(), rom, 0.001)).start()
                     except:
                         pass
+
+####################################
+                if room_spam and '0e15' in dataC.hex()[0:4]:
+                        try:
+                            while True:
+                                for _ in range(500):
+                                    for i in range(100):
+                                        remote.send(dataC)
+                                        time.sleep(0.001)
+                            time.sleep(0.1,5)
+                        except (BrokenPipeError, ConnectionResetError) as e:
+                            print(f"fuck garena: {e}")
 ####################################
                 if code_verified and b'/SQUID-EMOTES' in dataS:
                     try:
