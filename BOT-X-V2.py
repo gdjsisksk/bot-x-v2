@@ -1099,7 +1099,7 @@ def run(host, port):
         print(f"ERROR IN run: {e}")
 def start_bot():
     proxy = Proxy()
-    proxy.run("127.0.0.1", 1080)
+    proxy.run("127.0.0.1", 3000)
  
 if __name__ == "__main__":
     start_bot()
