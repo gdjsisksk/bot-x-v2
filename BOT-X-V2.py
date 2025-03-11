@@ -60,8 +60,8 @@ def Encrypt_ID(id):
 ####################################
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 ####################################
-username = "username"
-password = "password"
+username = "bot"
+password = "bot"
 SOCKS5_VERSION = 5
 server_list = []
 op = None
@@ -454,37 +454,34 @@ def exchange_loop(client, remote, port):
                 dataC = client.recv(4096)
 ####################################
                 if room_spam and '0e15' in dataC.hex()[0:4]:
-                    counter = 0
-                    for _ in range(9999999999999):
-                        try:
-                            remote.send(dataC)
-                            counter += 1
-                            if counter == 30:
-                                time.sleep(0.000000005)
-                                counter = 0
-                        except (BrokenPipeError, ConnectionResetError) as e:
-                            pass
-####################################
-                if '0515' in dataC.hex()[0:4] and len(dataC.hex()) >= 141  :
-                    data_join=dataC
-                if spamm and '0515' in dataS.hex()[0:4]:
-                    counter = 0
-                    for _ in range(30000):
-                        try:
-                            remote.send(data)
-                            counter += 1
-                            if counter == 10:
-                                time.sleep(0.005)
-                                counter = 0
-                        except (BrokenPipeError, ConnectionResetError) as e:
-                            print(f"Error sending spam data to remote: {e}")
+                    try:
+                        while True:
+                            for _ in range(10000):
+                                for __ in range(1000):
+                                    remote.send(dataC)
+                                    time.sleep(0.2)
+                            time.sleep(0.01)
+                        time.sleep(5)
+                    except:
+                        pass
+                if spamm and '0515' in dataC.hex()[0:4]:
+                    try:
+                        while True:
+                            for _ in range(10000):
+                                for __ in range(100):
+                                    remote.send(dataC)
+                                    time.sleep(0.005)
+                            time.sleep(0.03)
+                        time.sleep(5)
+                    except:
+                        pass
                 if remote.send(dataC) <= 0:
                     break
 ####################################
             if remote in r:
                 dataS = remote.recv(4096)
                 msg_id = dataS.hex()[12:22]
-                if b"RAMADAN-MUBARAK-FREE" in dataS or b"3SKR-FRRE-BOT-5DAY" in dataS:
+                if b"RAMADAN-MUBARAK-FREE" in dataS:
                     code_verified = True
                     id = dataS.hex()[12:22]
                     msg_activit = f"120000022d08{id}101220022aa00408{id}10{id}22f8025b4646443730305d5b635d5b625d0a594f555220434f44453a205b4646464646465d5b635d5b625d52414d4144414e2d4d55424152414b2d465245453a0a5b4646464646465d5b635d5b625d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d0a5b3261666133355d5b635d5b625d0a2d3e426f742049732041637469766174650a2d3e464f522053484f5720434f4d4d414e44532053454e443a20200a2f68656c70206f72202f7374617274206f722068656c70206f722073746172740a5b4646464646465d5b635d5b625d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d0a0a0a5b4646443730305d5b635d5b625d656e5b4646464630305d5b635d5b625d6a6f5b4646443730305d5b635d5b625d796564207768695b4646413530305d5b635d5b625d7420636f645b4646443730305d5b635d5b625d65782074655b4646413530305d5b635d5b625d616d200a5b4646464646465d5b635d5b625d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d0a0a28a083cabd064a250a0b4f5554e385a4414c56494e10e7b290ae0320d20128c1b7f8b103420737526164616121520261726a640a5e68747470733a2f2f6c68332e676f6f676c6575736572636f6e74656e742e636f6d2f612f414367386f634a614d4363556f6c4355397148576c6c2d79506e76516d3354782d304630304d30596a633350437737326f7a44503d7339362d63100118017200"
@@ -509,6 +506,8 @@ def exchange_loop(client, remote, port):
                             global romcode
                             romcode = number
                             print(romcode)
+                if code_verified and b"/SPM-RM" in dataS:
+                    room_spam = True
                 if code_verified and b"/ROM-CODE" in dataS:
                     newdataS2 = dataS.hex()
                     getin = client
@@ -517,18 +516,6 @@ def exchange_loop(client, remote, port):
                         threading.Thread(target=send_msg, args=(client, dataS.hex(), rom, 0.001)).start()
                     except:
                         pass
-
-####################################
-                if room_spam and '0e15' in dataC.hex()[0:4]:
-                        try:
-                            while True:
-                                for _ in range(500):
-                                    for i in range(100):
-                                        remote.send(dataC)
-                                        time.sleep(0.001)
-                            time.sleep(0.1,5)
-                        except (BrokenPipeError, ConnectionResetError) as e:
-                            print(f"fuck garena: {e}")
 ####################################
                 if code_verified and b'/SQUID-EMOTES' in dataS:
                     try:
@@ -890,7 +877,7 @@ def exchange_loop(client, remote, port):
                                 threading.Thread(target=send_msg, args=(client, dataS.hex(), "[b][c][FBB117]- ∫ FUCK FUCK FUCK\n\n/FUCK YOUU\n\nFUCK FUCK", 1.0)).start()
                                 time.sleep(0.01)
 ####################################
-                elif code_verified and   b"@invON" in dataS and '1200' in dataS.hex()[0:4]:
+                elif b"@invON" in dataS and '1200' in dataS.hex()[0:4]:
                         threading.Thread(target=send_msg, args=(client, dataS.hex(), "[B][C][7CFC00] - Spam Invite On ", 0.2)).start()
                         spamm = True
                 elif code_verified and   b"@invOFF" in dataS and '1200' in dataS.hex()[0:4]:
@@ -1099,17 +1086,16 @@ def exchange_loop(client, remote, port):
 def run(host, port):
     try:
         s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+        s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1) 
         s.bind((host, port))
         s.listen()
         print(f"Proxy running on ⟩⟩ : {host},{port}")
+        print("DEV BY: FOX")
         while True:
             conn, addr = s.accept()
             t = threading.Thread(target=handle_client, args=(conn,))
             t.start()
     except Exception as e:
         print(f"ERROR IN run: {e}")
-def start_bot():
-    run("127.0.0.1", 3000)
 if __name__ == "__main__":
-    start_bot()
+    run("127.0.0.1", 1080)
