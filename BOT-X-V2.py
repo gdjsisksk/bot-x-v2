@@ -1085,14 +1085,19 @@ def exchange_loop(client, remote, port):
         print(f"ERROR IN exchange_loop: {e}")
 #############START BOT###############
 def run(host, port):
-    s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
-    s.bind((host, port))
-    s.listen()
-    print(f"Proxy running on ⟩⟩ : {host}, {port}")
-    while True:
-        conn, addr = s.accept()
-        t = threading.Thread(target=handle_client, args=(conn,))
-        t.start()
-if __name__ == "__main__":
+    try:
+        s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+        s.bind((host, port))
+        s.listen()
+        print(f"Proxy running on ⟩⟩ : {host},{port}")
+        while True:
+            conn, addr = s.accept()
+            t = threading.Thread(target=handle_client, args=(conn,))
+            t.start()
+    except Exception as e:
+        print(f"ERROR IN run: {e}")
+def start_bot():
     run("127.0.0.1", 3000)
+if name == "main":
+    start_bot()
